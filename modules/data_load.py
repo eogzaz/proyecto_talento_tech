@@ -4,7 +4,7 @@ import requests
 from modules.data_cleaning import obtencion_dataframes
 from modules.data_cleaning import exajoules_to_twh
 
-def datos(pais):
+def Cargar_Datos():
     #Datos obtenidos del proyecto The Energy Institute Statistical Review of World Energy del energy institute (https://www.energyinst.org/statistical-review)
     url = "https://www.energyinst.org/__data/assets/excel_doc/0020/1540550/EI-Stats-Review-All-Data.xlsx"
     nombre_del_archivo = "EI-Stats-Review-All-Data.xlsx"
@@ -58,48 +58,70 @@ def datos(pais):
     df_GeoBiomassOther_consumption = exajoules_to_twh(obtencion_dataframes('Geo Biomass Other - EJ','Exajoules (input-equivalent)',paises=paises_latam)[20:].reset_index(drop=True))
 
     #Consumo Renovable total
-    df_Suma_Renovables_con_hidro = (df_solar_consumption[paises_latam] + df_wind_consumption[paises_latam]+df_GeoBiomassOther_consumption[paises_latam]+df_hydro_consumption[paises_latam])
-    df_Suma_Renovables_con_hidro.insert(0,'Años',np.arange(1985.0,2024.0,1))
+    df_Suma_consumption_Renovables_con_hidro = (df_solar_consumption[paises_latam] + df_wind_consumption[paises_latam]+df_GeoBiomassOther_consumption[paises_latam]+df_hydro_consumption[paises_latam])
+    df_Suma_consumption_Renovables_con_hidro.insert(0,'Años',np.arange(1985.0,2024.0,1))
 
     #Consumo Renovable total sin hidro
-    df_Suma_Renovables_sin_hidro = (df_solar_consumption[paises_latam] + df_wind_consumption[paises_latam]+df_GeoBiomassOther_consumption[paises_latam])
-    df_Suma_Renovables_sin_hidro.insert(0,'Años',np.arange(1985.0,2024.0,1))
+    df_Suma_consumption_Renovables_sin_hidro = (df_solar_consumption[paises_latam] + df_wind_consumption[paises_latam]+df_GeoBiomassOther_consumption[paises_latam])
+    df_Suma_consumption_Renovables_sin_hidro.insert(0,'Años',np.arange(1985.0,2024.0,1))
 
     #Consumo No Renovable total
     df_no_renovables_consumption = (df_primary_energy_consumption[paises_latam] - (df_solar_consumption[paises_latam] + df_wind_consumption[paises_latam]+df_GeoBiomassOther_consumption[paises_latam]+df_hydro_consumption[paises_latam]))
     df_no_renovables_consumption.insert(0,'Años',np.arange(1985.0,2024.0,1))
 
-    def df_variables(pais='Colombia'):
-        data={
-            'Tiempo [años]':df_electricity_generation['Años'],
-            'Generacion total de energia  [TWh]':df_electricity_generation[pais],
-            'Generacion solar [TWh]':df_solar_generation[pais],
-            'Generacion eolica [TWh]':df_wind_generation[pais],
-            'Generacion geotermica-biomasa-otras [TWh]':df_GeoBiomassOther[pais],
-            'Generacion hidroelectrica [TWh]':df_hydro_generation[pais],
-            'Generacion renovable incluyendo hidroelectrica [TWh]':df_Suma_Renovables_con_hidro[pais],
-            'Generacion renovable incluyendo hidroelectrica [TWh]':df_Suma_Renovables_sin_hidro[pais],
-            'Generacion no renovable [TWh]':df_no_renovables_generation[pais],
-            'Emisiones de CO2 [MTon]':df_EmisionesCO2[pais],
-            'Comsumo de energia primario [TWh]':df_primary_energy_consumption[pais],
-            'Comsumo de energia solar [TWh]':df_solar_consumption[pais],
-            'Comsumo de energia eolica [TWh]':df_wind_consumption[pais],
-            'Comsumo de energia hidroelectrica [TWh]':df_hydro_consumption[pais],
-            'Comsumo de energia geotermica-biomasa-otras [TWh]':df_GeoBiomassOther_consumption[pais],
-            'Comsumo de energia renovable incluyendo hidroelectrica [TWh]':df_Suma_Renovables_con_hidro[pais],
-            'Comsumo de energia renovable incluyendo hidroelectrica [TWh]':df_Suma_Renovables_sin_hidro[pais],
-            'Comsumo de energia no renovable [TWh]':df_no_renovables_consumption[pais]    
+    datos=[df_electricity_generation,
+           df_solar_generation,
+           df_wind_generation,
+           df_GeoBiomassOther,
+           df_hydro_generation,
+           df_Suma_Renovables_con_hidro,
+           df_Suma_Renovables_sin_hidro,
+           df_no_renovables_generation,
+           df_EmisionesCO2,
+           df_primary_energy_consumption,
+           df_solar_consumption,
+           df_wind_consumption,
+           df_hydro_consumption,
+           df_GeoBiomassOther_consumption,
+           df_Suma_consumption_Renovables_con_hidro,
+           df_Suma_consumption_Renovables_sin_hidro,
+           df_no_renovables_consumption]
+    
+    return datos
+
+
+
+
+def df_variables(datos, pais):
+    data={'Tiempo [años]':datos[0]['Años'],
+        'Generacion total de energia  [TWh]':datos[0][pais],
+            'Generacion solar [TWh]':datos[1][pais],
+            'Generacion eolica [TWh]':datos[2][pais],
+            'Generacion geotermica-biomasa-otras [TWh]':datos[3][pais],
+            'Generacion hidroelectrica [TWh]':datos[4][pais],
+            'Generacion renovable incluyendo hidroelectrica [TWh]':datos[5][pais],
+            'Generacion renovable incluyendo hidroelectrica [TWh]':datos[6][pais],
+            'Generacion no renovable [TWh]':datos[7][pais],
+            'Emisiones de CO2 [MTon]':datos[8][pais],
+            'Comsumo de energia primario [TWh]':datos[9][pais],
+            'Comsumo de energia solar [TWh]':datos[10][pais],
+            'Comsumo de energia eolica [TWh]':datos[11][pais],
+            'Comsumo de energia hidroelectrica [TWh]':datos[12][pais],
+            'Comsumo de energia geotermica-biomasa-otras [TWh]':datos[13][pais],
+            'Comsumo de energia renovable incluyendo hidroelectrica [TWh]':datos[14][pais],
+            'Comsumo de energia renovable incluyendo hidroelectrica [TWh]':datos[15][pais],
+            'Comsumo de energia no renovable [TWh]':datos[16][pais]    
             }
-        df_pais=pd.DataFrame(data)
-        return df_pais
- 
-    if pais=='Latinoamerica':
-        l=[]  #lista auxiliar
-        for i in paises_latam:
-            l.append(df_variables(i))
-        df_latam=sum(l)
+    df_pais=pd.DataFrame(data)
+    
+    return df_pais
+
+def dataframe_latam(datos,paises):
+    l=[]  #lista auxiliar
+    for i in paises:
+        l.append(df_variables(datos,i))
+    df_latam=sum(l)
         #Los años no se deben sumar
-        df_latam['Tiempo [años]']=np.arange(1985.0,2024.0,1)
-        return df_latam
-    else:
-        return df_variables(pais)
+    df_latam['Tiempo [años]']=np.arange(1985.0,2024.0,1)
+    return df_latam
+
