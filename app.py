@@ -3,18 +3,34 @@ from modules.data_load import *
 from modules.data_cleaning import *
 from modules.data_analysis import *
 
-st.title("Graficas para analizar")
+#------------------Variables importantes--------------------
+paises_latam=['Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Peru', 'Venezuela','Central America','Other South America']
 
-paises_latam=['Mexico','Argentina', 'Brazil', 'Chile', 'Colombia',
-                           'Ecuador', 'Peru', 'Venezuela','Central America',
-                           'Other South America']
+#-------------------------------------------------------------
 
-#Seleccion del pais
-opciones_paises = ['Latinoamerica','Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Peru', 'Venezuela']
-eleccion_pais = st.selectbox("Elige un pais para analizar: ", opciones_paises)
+#------------------Carga de los datos-----------------------
+Datos = Cargar_Datos()
 
-#Seleccion de variables
-variables = ['Tiempo [años]', 'Generacion total de energia  [TWh]',
+Paises={}
+for i in paises_latam:
+  Paises[i]=df_variables(Datos,i)
+Paises['Latinoamerica']=dataframe_latam(Datos,paises_latam)
+#-----------------------------------------------------------
+
+
+#----------------Codigo streamlit-----------------------------
+st.title("Variables en el tiempo")
+
+
+#Seleccion de los pais
+paises_seleccionados = st.multiselect(
+    'Cuales paises te gustaria ver?',
+    list(Paises.keys()),
+    ['Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Peru', 'Venezuela','Central America','Other South America'])
+
+
+#Selección de variable a graficar vs el tiempo
+variables = ['(Elija una variable)','Tiempo [años]', 'Generacion total de energia  [TWh]',
        'Generacion solar [TWh]', 'Generacion eolica [TWh]',
        'Generacion geotermica-biomasa-otras [TWh]',
        'Generacion hidroelectrica [TWh]',
@@ -26,13 +42,22 @@ variables = ['Tiempo [años]', 'Generacion total de energia  [TWh]',
        'Comsumo de energia geotermica-biomasa-otras [TWh]',
        'Comsumo de energia renovable incluyendo hidroelectrica [TWh]',
        'Comsumo de energia no renovable [TWh]']
-variable_1 = st.selectbox("Elige primer variable para graficar: ", variables)
-variable_2 = st.selectbox("Elige segunda variable para graficar: ", variables)
+variable_vs_time = st.selectbox("Elige primer variable para graficar: ", variables)
 
 
-#Datos del pais seleccionado
-pais=datos(eleccion_pais)
+#Seleccion rango de años
+min_value = 1985
+max_value = 2023
 
-fig=grafico_dispersion(pais, variable_1, variable_2,eleccion_pais) 
-st.pyplot(fig)
+from_year, to_year = st.slider(
+    'Cuales años te interesan?',
+    min_value=min_value,
+    max_value=max_value,
+    value=[min_value, max_value])
+
+if variable_vs_time=='(Elija una variable)':
+  st.write('Escoge una variable para poder graficar')
+else:
+    fig=grafico_tiempo([Paises[i] for i in paises_seleccionados], variable_vs_time, from_year,to_year,paises_seleccionados)
+    st.pyplot(fig)
 
