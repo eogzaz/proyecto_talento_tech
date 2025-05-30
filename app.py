@@ -10,11 +10,11 @@ paises_latam=['Mexico','Argentina', 'Brazil', 'Chile', 'Colombia',
                            'Other South America']
 
 #Seleccion del pais
-opciones_paises = ['(Elija un pais)','Latinoamerica','Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Peru', 'Venezuela']
+opciones_paises = ['Latinoamerica','Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Peru', 'Venezuela']
 eleccion_pais = st.selectbox("Elige un pais para analizar: ", opciones_paises)
 
 #Seleccion de variables
-variables = ['(Elijja una variable)','Tiempo [años]', 'Generacion total de energia  [TWh]',
+variables = ['Tiempo [años]', 'Generacion total de energia  [TWh]',
        'Generacion solar [TWh]', 'Generacion eolica [TWh]',
        'Generacion geotermica-biomasa-otras [TWh]',
        'Generacion hidroelectrica [TWh]',
