@@ -19,7 +19,7 @@ Paises['Latinoamerica']=dataframe_latam(Datos,paises_latam)
 
 
 #----------------Codigo streamlit-----------------------------
-st.title("Variables en el tiempo")
+st.title("Series de tiempo")
 
 
 #Seleccion de los pais
