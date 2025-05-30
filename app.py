@@ -1,4 +1,5 @@
 import streamlit as st
+import json
 from modules.data_load import *
 from modules.data_cleaning import *
 from modules.data_analysis import *
@@ -9,12 +10,10 @@ paises_latam=['Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Pe
 #-------------------------------------------------------------
 
 #------------------Carga de los datos-----------------------
-Datos = Cargar_Datos()
+with open('data.json', 'r') as f:
+  Paises_from_json = json.load(f)
 
-Paises={}
-for i in paises_latam:
-  Paises[i]=df_variables(Datos,i)
-Paises['Latinoamerica']=dataframe_latam(Datos,paises_latam)
+Paises = {key: pd.DataFrame(data) for key, data in Paises_from_json.items()}
 #-----------------------------------------------------------
 
 
