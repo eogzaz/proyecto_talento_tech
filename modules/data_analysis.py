@@ -51,3 +51,23 @@ def grafico_dispersion(df, col1, col2,pais):
     
     return fig
 
+def grafico_tiempo(paises, col, inicio, final, pais):
+
+    fig=plt.figure(figsize=(10, 6))
+    for indice,nombres in enumerate(paises):
+        plt.plot(nombres['Tiempo [años]'], nombres[col], label=pais[indice])
+
+    # Generate title and labels automatically
+    title = f'Tiempo [años] vs {col}' #en {pais}'
+    xlabel = 'Tiempo [años]'
+    ylabel = col
+
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.xlim(inicio,final)
+
+    plt.grid(True)
+    
+    return fig
