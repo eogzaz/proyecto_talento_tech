@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 import requests
-from modules.data_cleaning import *
+from modules.data_cleaning import obtencion_dataframes
+from modules.data_cleaning import exajoules_to_twh
 
 def datos(pais):
     #Datos obtenidos del proyecto The Energy Institute Statistical Review of World Energy del energy institute (https://www.energyinst.org/statistical-review)
