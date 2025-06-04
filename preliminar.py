@@ -31,13 +31,13 @@ variables = ['(Elija una variable)','Tiempo [años]', 'Generacion total de energ
        'Generacion renovable sin hidroelectrica [TWh]',
        'Generacion renovable con hidroelectrica [TWh]',
        'Generacion no renovable [TWh]', 'Emisiones de CO2 [MTon]',
-       'Consumo de energia primario [TWh]', 'Consumo de energia solar [TWh]',
-       'Consumo de energia eolica [TWh]',
-       'Consumo de energia hidroelectrica [TWh]',
-       'Consumo de energia geotermica-biomasa-otras [TWh]',
-       'Consumo de energia renovable sin hidroelectrica [TWh]',
-       'Consumo de energia renovable con hidroelectrica [TWh]',
-       'Consumo de energia no renovable [TWh]']
+       'Comsumo de energia primario [TWh]', 'Consumo de energia solar [TWh]',
+       'Comsumo de energia eolica [TWh]',
+       'Comsumo de energia hidroelectrica [TWh]',
+       'Comsumo de energia geotermica-biomasa-otras [TWh]',
+       'Comsumo de energia renovable sin hidroelectrica [TWh]',
+       'Comsumo de energia renovable con hidroelectrica [TWh]',
+       'Comsumo de energia no renovable [TWh]']
 variable_vs_time = st.selectbox("Elige primer variable para graficar: ", variables)
 
 
