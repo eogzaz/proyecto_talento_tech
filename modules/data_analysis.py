@@ -36,7 +36,7 @@ def grafico_pie(pais,eleccion_pais,año):
     renewable_sources = ['Generacion solar [TWh]','Generacion eolica [TWh]','Generacion geotermica-biomasa-otras [TWh]','Generacion hidroelectrica [TWh]','Generacion no renovable [TWh]']
     values = [year_data[source] for source in renewable_sources]
     labels = [source.replace(' [TWh]', '').replace('Generacion ','') for source in renewable_sources]
-    colors = ['yellow','white','green','blue','grey']#sns.color_palette('pastel')[0:len(values)] # Usar paleta de colores de Seaborn
+    colors = ['yellow','olivedrab','lime','deepskyblue','darkgrey']#sns.color_palette('pastel')[0:len(values)] # Usar paleta de colores de Seaborn
 
     fig = go.Figure(data=[go.Pie(
         labels=labels,
@@ -52,7 +52,6 @@ def grafico_pie(pais,eleccion_pais,año):
 def grafico_matriz_energetica(pais_df, eleccion_pais, start_year, end_year):
 
     fig, ax = plt.subplots(figsize=(10, 5))
-    sns.set(style="darkgrid")
     # Filter data by year range
     filtered_df = pais_df[(pais_df['Tiempo [años]'] >= start_year) & (pais_df['Tiempo [años]'] <= end_year)].copy()
  
@@ -79,7 +78,6 @@ def grafico_matriz_energetica(pais_df, eleccion_pais, start_year, end_year):
 def grafico_dispersion(df, col1, col2,pais):
 
     fig=plt.figure(figsize=(10, 6))
-    sns.set(style="darkgrid")
     sns.scatterplot(data=df, x=col1, y=col2)
 
     # Generate title and labels automatically
