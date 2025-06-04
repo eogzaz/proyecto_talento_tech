@@ -5,4 +5,4 @@ matplotlib
 streamlit
 seaborn
 openpyxl
-plotly.graph_objects
+plotly
