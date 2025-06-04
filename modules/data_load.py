@@ -94,23 +94,23 @@ def Cargar_Datos():
 
 def df_variables(datos, pais):
     data={'Tiempo [años]':datos[0]['Años'],
-        'Generacion total de energia  [TWh]':datos[0][pais],
+            'Generacion total de energia  [TWh]':datos[0][pais],
             'Generacion solar [TWh]':datos[1][pais],
             'Generacion eolica [TWh]':datos[2][pais],
             'Generacion geotermica-biomasa-otras [TWh]':datos[3][pais],
             'Generacion hidroelectrica [TWh]':datos[4][pais],
-            'Generacion renovable incluyendo hidroelectrica [TWh]':datos[5][pais],
-            'Generacion renovable incluyendo hidroelectrica [TWh]':datos[6][pais],
+            'Generacion renovable con hidroelectrica [TWh]':datos[5][pais],
+            'Generacion renovable sin hidroelectrica [TWh]':datos[6][pais],
             'Generacion no renovable [TWh]':datos[7][pais],
             'Emisiones de CO2 [MTon]':datos[8][pais],
-            'Comsumo de energia primario [TWh]':datos[9][pais],
-            'Comsumo de energia solar [TWh]':datos[10][pais],
-            'Comsumo de energia eolica [TWh]':datos[11][pais],
-            'Comsumo de energia hidroelectrica [TWh]':datos[12][pais],
-            'Comsumo de energia geotermica-biomasa-otras [TWh]':datos[13][pais],
-            'Comsumo de energia renovable incluyendo hidroelectrica [TWh]':datos[14][pais],
-            'Comsumo de energia renovable incluyendo hidroelectrica [TWh]':datos[15][pais],
-            'Comsumo de energia no renovable [TWh]':datos[16][pais]    
+            'Consumo de energia primario [TWh]':datos[9][pais],
+            'Consumo de energia solar [TWh]':datos[10][pais],
+            'Consumo de energia eolica [TWh]':datos[11][pais],
+            'Consumo de energia hidroelectrica [TWh]':datos[12][pais],
+            'Consumo de energia geotermica-biomasa-otras [TWh]':datos[13][pais],
+            'Consumo de energia renovable con hidroelectrica [TWh]':datos[14][pais],
+            'Consumo de energia renovable sin hidroelectrica [TWh]':datos[15][pais],
+            'Consumo de energia no renovable [TWh]':datos[16][pais]    
             }
     df_pais=pd.DataFrame(data)
     
@@ -124,4 +124,3 @@ def dataframe_latam(datos,paises):
         #Los años no se deben sumar
     df_latam['Tiempo [años]']=np.arange(1985.0,2024.0,1)
     return df_latam
-
