@@ -63,7 +63,7 @@ def grafico_matriz_energetica(pais_df, eleccion_pais, start_year, end_year):
                  filtered_df['Generacion eolica [TWh]'],
                  filtered_df['Generacion geotermica-biomasa-otras [TWh]'],
                  labels=['No Renovables','Hidro', 'Solar', 'Eólica', 'Geo/Biomasa/Otras'],
-                 colors=['darkgrey','deepskyblue','yellow','olivedrad','lime'],
+                 colors=['darkgrey','deepskyblue','yellow','olivedrab','lime'],
                  alpha=0.8)
 
     ax.set_xlabel('Tiempo [años]')
