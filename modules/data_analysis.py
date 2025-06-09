@@ -61,13 +61,8 @@ def grafico_generacion_y_emision_go(pais, eleccion_pais, inicio, final):
     ))
 
     # Actualizar layout para ejes dobles
-    titulo = f"Evolución de Generación y Emisiones en {eleccion_pais}" if isinstance(eleccion_pais, str) else "Gráfico de Generación y Emisiones"
     
     fig.update_layout(
-        title=dict(
-            text=titulo,
-            x=0.5
-        ),
         xaxis=dict(title='Tiempo [años]'),
         yaxis=dict(
             title='Generación Total [TWh]',
