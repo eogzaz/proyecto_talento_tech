@@ -62,7 +62,7 @@ def grafico_generacion_y_emision_go(pais, eleccion_pais, inicio, final):
 
     # Actualizar layout para ejes dobles
     fig.update_layout(
-        #title=f'Evolución de Generación y Emisiones en {eleccion_pais}',
+        title=f' ',
         xaxis=dict(title='Tiempo [años]'),
         yaxis=dict(
             title='Generación Total [TWh]',
