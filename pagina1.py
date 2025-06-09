@@ -29,7 +29,7 @@ st.markdown("""
             margin-bottom: 20px;
         }
         .title-text {
-            font-size: 40px;
+            font-size: 2rem;
             font-weight: bold;
             text-align: center;
         }
