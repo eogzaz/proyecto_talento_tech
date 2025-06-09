@@ -43,7 +43,7 @@ st.markdown("""
 
 #Pendiente comentar este codigo......
 
-col1, col_sep, col2 = st.columns([1, 0.05, 1])
+col1, col2 = st.columns([1, 1])
 
 with col1:
     subcol1,subcol2,subcol3=st.columns([2.2, .9, 3])
@@ -74,9 +74,6 @@ with col1:
         mostrar_kpis_generacion(Paises[eleccion_pais1],hasta_año1)
         fig1=grafico_generacion_y_emision_go(Paises[eleccion_pais1],eleccion_pais1,desde_año1,hasta_año1)
         st.plotly_chart(fig1,key='grafica1')
-
-with col_sep:
-    st.markdown("<div style='height: 700px; border-left: 0.5px solid #ccc;'></div>", unsafe_allow_html=True)
 
 with col2:
     subcol1,subcol2,subcol3=st.columns([2.2, .9, 3])
