@@ -4,7 +4,15 @@ from modules.data_analysis import *
 import json
 
 #------------------Variables importantes--------------------
-paises_latam=['Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Peru', 'Venezuela','Central America','Other South America']
+Regiones_y_paises = ['Argentina','Brazil','Chile','Colombia','Ecuador','Peru','Venezuela','Central America','Other Caribbean','Other South America',
+                      'Canada','Mexico','US','Total North America',
+                      'Total Europe',
+                      'Total CIS',
+                      'Total Middle East',
+                      'Total Africa',
+                      'Total Asia Pacific',
+                      'Total World'
+                    ]
 
 #-------------------------------------------------------------
 
@@ -12,9 +20,14 @@ paises_latam=['Mexico','Argentina', 'Brazil', 'Chile', 'Colombia','Ecuador', 'Pe
 Datos = Cargar_Datos()
 
 Paises={}
-for i in paises_latam:
+for i in Regiones_y_paises:
   Paises[i]=df_variables(Datos,i)
-Paises['Latinoamerica']=dataframe_latam(Datos,paises_latam)
+
+paises_para_agregado_latam = ['Mexico', 'Argentina', 'Brazil', 'Chile', 'Colombia',
+                                  'Ecuador', 'Peru', 'Venezuela', 'Central America',
+                                  'Other South America']
+
+Paises['Latinoamerica']=dataframe_latam(Datos,paises_para_agregado_latam)
 
 # Convertir cada DataFrame a un diccionario
 d_json_ready = {key: df.to_dict(orient='records') for key, df in Paises.items()}
