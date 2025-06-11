@@ -63,7 +63,7 @@ with col2:
     with subcol1:
         eleccion_pais2 = st.selectbox("Elige un pais para analizar: ", 
                                       list(Paises.keys()),
-                                      index=-1,
+                                      index=20,
                                       key='pais2',
                                       placeholder="Elige un pais para analizar",
                                       label_visibility="collapsed"
