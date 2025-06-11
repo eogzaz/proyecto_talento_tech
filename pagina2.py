@@ -85,14 +85,17 @@ with col2:
                                  placeholder="Elige un pais para analizar",
                                  label_visibility="collapsed"
                                 )
-    año = st.selectbox(
-        "Selecciona un año para ver el mix de generación de energía:",
-        options=np.arange(2023,1985,-1))
+   #Selección de rango de años
+    desde_año, hasta_año = st.slider(
+        'Cuales años te interesan?',
+        min_value=1985,
+        max_value=2023,
+        value=[1985, 2023])
 
     if eleccion_pais==None:
         st.write('(Escoge un pais para poder graficar)')
     else:
-        fig2=grafico_pie(Paises[eleccion_pais],eleccion_pais,año)
+        fig2=grafico_matriz_energetica_bar(Paises[eleccion_pais],eleccion_pais,desde_año,hasta_año)
         st.plotly_chart(fig2)
 
 with col3:
