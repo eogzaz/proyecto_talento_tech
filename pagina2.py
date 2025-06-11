@@ -40,7 +40,37 @@ st.markdown("""
             """, unsafe_allow_html=True)
 #-----------------------------------------------------------
 
-col1, col2 =st.columns(3)
+col1, col2 =st.columns(2)
+with col1:
+    #Seleccion del pais
+    eleccion_pais = st.selectbox("Elige un pais para analizar: ", 
+                                 list(Paises.keys()),
+                                 index=None,
+                                 key='pais2',
+                                 placeholder="Elige un pais para analizar",
+                                 label_visibility="collapsed"
+                                )
+   #Selección de rango de años
+    desde_año, hasta_año = st.slider(
+        'Cuales años te interesan?',
+        min_value=1985,
+        max_value=2023,
+        value=[1985, 2023],
+        key='años1')
+
+    if eleccion_pais==None:
+        st.write('(Escoge un pais para poder graficar)')
+    else:
+        fig2=grafico_matriz_energetica_bar(Paises[eleccion_pais],eleccion_pais,desde_año,hasta_año)
+        st.plotly_chart(fig2)
+
+
+  fig3=grafico_tiempo(Paises['Colombia'],1985,2023,'Colombia')
+  st.pyplot(fig3)
+  
+  fig4=grafico_tiempo(Paises['Colombia'],1985,2023,'Latinoamerica')
+  
+  st.pyplot(fig4)
 with col2:
     paises_seleccionados=st.multiselect('Seleccione los paises',list(Paises.keys()),
                                         key='pais1',
@@ -76,36 +106,7 @@ with col2:
         fig1=grafico_barras_agrupadas(paises_seleccionados,desde_año,hasta_año,variables_seleccionadas,Paises)
         st.pyplot(fig1)
 
-with col1:
-    #Seleccion del pais
-    eleccion_pais = st.selectbox("Elige un pais para analizar: ", 
-                                 list(Paises.keys()),
-                                 index=None,
-                                 key='pais2',
-                                 placeholder="Elige un pais para analizar",
-                                 label_visibility="collapsed"
-                                )
-   #Selección de rango de años
-    desde_año, hasta_año = st.slider(
-        'Cuales años te interesan?',
-        min_value=1985,
-        max_value=2023,
-        value=[1985, 2023],
-        key='años1')
 
-    if eleccion_pais==None:
-        st.write('(Escoge un pais para poder graficar)')
-    else:
-        fig2=grafico_matriz_energetica_bar(Paises[eleccion_pais],eleccion_pais,desde_año,hasta_año)
-        st.plotly_chart(fig2)
-
-
-  fig3=grafico_tiempo(Paises['Colombia'],1985,2023,'Colombia')
-  st.pyplot(fig3)
-  
-  fig4=grafico_tiempo(Paises['Colombia'],1985,2023,'Latinoamerica')
-  
-  st.pyplot(fig4)
 
 st.write('''Tanto Colombia como América Latina presentan un claro potencial de transformación hacia una matriz energética más diversificada y sostenible. Históricamente, la energía hidroeléctrica ha sido la base de la generación renovable en ambas regiones. Sin embargo, la creciente preocupación por la fiabilidad de la hidroeléctrica, debido a factores como el cambio climático y la variabilidad hídrica, impulsa la necesidad de adoptar otras fuentes de energía.
 Los datos revelan un crecimiento significativo, aunque reciente, en la generación de energía eólica y solar. Esto indica que estas fuentes están ganando impulso y demostrando su capacidad para complementar y eventualmente reducir la dependencia de la energía hidroeléctrica. La correlación entre la "Ren power (excl hydro) - TWh" y la generación solar y eólica es muy fuerte, especialmente en América Latina (0.88 para solar y 0.98 para eólica), lo que destaca su contribución a la energía renovable más allá de la hidroeléctrica. En Colombia, aunque los valores absolutos son menores, también se observan correlaciones positivas significativas.
