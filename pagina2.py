@@ -40,8 +40,8 @@ st.markdown("""
             """, unsafe_allow_html=True)
 #-----------------------------------------------------------
 
-col1, col2, col3 =st.columns(3)
-with col1:
+col1, col2 =st.columns(3)
+with col2:
     paises_seleccionados=st.multiselect('Seleccione los paises',list(Paises.keys()),
                                         key='pais1',
                                         placeholder="Elige un pais para analizar",
@@ -76,7 +76,7 @@ with col1:
         fig1=grafico_barras_agrupadas(paises_seleccionados,desde_año,hasta_año,variables_seleccionadas,Paises)
         st.pyplot(fig1)
 
-with col2:
+with col1:
     #Seleccion del pais
     eleccion_pais = st.selectbox("Elige un pais para analizar: ", 
                                  list(Paises.keys()),
@@ -99,7 +99,7 @@ with col2:
         fig2=grafico_matriz_energetica_bar(Paises[eleccion_pais],eleccion_pais,desde_año,hasta_año)
         st.plotly_chart(fig2)
 
-with col3:
+
   fig3=grafico_tiempo(Paises['Colombia'],1985,2023,'Colombia')
   st.pyplot(fig3)
   
