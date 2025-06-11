@@ -16,34 +16,14 @@ Paises = {key: pd.DataFrame(data) for key, data in Paises_from_json.items()}
 st.set_page_config(layout="wide")
 
 #Titulo, se usa st.markdown para mayor estetica,
-#la otra opcion es: 
-#st.title(f"Evolución de la generación de energía electrica y Emisiones de CO2")
-st.markdown("""
-        <style>
-        .title-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px; /* puedes reducirlo si quieres más arriba */
-            margin-top: -40px; /* sube el título */
-            margin-bottom: 20px;
-        }
-        .title-text {
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-        }
-        </style>
+#la otra opcion es:
+st.title(f"Evolución de consumo de energia primario y Emisiones de CO2")
 
-        <div class="title-container">
-            <div class="title-text">Evolución de la generación de energía eléctrica y de las emisiones de CO₂</div>
-        </div>
-            """, unsafe_allow_html=True)
 #-----------------------------
 
 #Pendiente comentar este codigo......
 
-col1, col2 = st.columns([1, 1])
+col1, col_sep, col2 = st.columns([1, 0.05, 1])
 
 with col1:
     subcol1,subcol2,subcol3=st.columns([2.2, .9, 3])
@@ -74,6 +54,9 @@ with col1:
         mostrar_kpis_generacion(Paises[eleccion_pais1],hasta_año1)
         fig1=grafico_generacion_y_emision_go(Paises[eleccion_pais1],eleccion_pais1,desde_año1,hasta_año1)
         st.plotly_chart(fig1,key='grafica1')
+
+with col_sep:
+    st.markdown("<div style='height: 700px; border-left: 0.5px solid #ccc;'></div>", unsafe_allow_html=True)
 
 with col2:
     subcol1,subcol2,subcol3=st.columns([2.2, .9, 3])
