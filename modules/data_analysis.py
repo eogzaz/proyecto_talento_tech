@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
 
@@ -42,8 +43,8 @@ def grafico_generacion_y_emision_go(pais, eleccion_pais, inicio, final):
     # Añadir trazado para Generación Total
     fig.add_trace(go.Scatter(
         x=df_filtrado['Tiempo [años]'],
-        y=df_filtrado['Generacion total de energia  [TWh]'],
-        name='Generación Total (TWh)',
+        y=df_filtrado["Consumo de energia primario [TWh]"],
+        name="Consumo de energia primario [TWh]",
         mode='lines+markers',
         marker=dict(symbol='circle', color='blue'),
         yaxis='y1'
@@ -61,11 +62,11 @@ def grafico_generacion_y_emision_go(pais, eleccion_pais, inicio, final):
     ))
 
     # Actualizar layout para ejes dobles
-    
     fig.update_layout(
+        #title=f'Evolución de Generación y Emisiones en {eleccion_pais}',
         xaxis=dict(title='Tiempo [años]'),
         yaxis=dict(
-            title='Generación Total [TWh]',
+            title='Consumo de energia primario [TWh]',
             titlefont=dict(color='blue'),
             tickfont=dict(color='blue')
         ),
@@ -81,7 +82,6 @@ def grafico_generacion_y_emision_go(pais, eleccion_pais, inicio, final):
         width=900
     )
 
-
     return fig
 
 
@@ -92,17 +92,14 @@ def mostrar_kpis_generacion(df_pais, anio: float):
     
 
     # Cálculos básicos
-    gen_total = entrada["Generacion total de energia  [TWh]"].iloc[0]
+    ene_total = entrada["Consumo de energia primario [TWh]"].iloc[0]
     emisiones = entrada["Emisiones de CO2 [MTon]"].iloc[0]
-    intensidad_carbono = emisiones / gen_total
-    gen_renovable = entrada["Generacion renovable con hidroelectrica [TWh]"].iloc[0]
-    porc_renovable = (gen_renovable / gen_total) * 100
-    gen_solar = entrada["Generacion solar [TWh]"].iloc[0]
-    gen_eolica = entrada["Generacion eolica [TWh]"].iloc[0]
+    intensidad_carbono = emisiones /ene_total
+ 
 
     # Mostrar métricas como tarjetas
     col1, col2,col3 = st.columns([3,3,3],border=True)
-    col1.metric(f"🔋 Generación Total {anio} ", f"{gen_total:.1f} TWh")
+    col1.metric(f"🔋 Energía primaria {anio} ", f"{ene_total:.1f} TWh")
     col2.metric(f"🏭 Emisiones CO₂ {anio}", f"{emisiones:.1f} MTon")
     col3.metric(f"⚡ Intensidad de carbono {anio}", f"{intensidad_carbono:.1f} MTon/TWh")
 
@@ -167,6 +164,81 @@ def grafico_mix_electrico(pais_df, eleccion_pais, start_year, end_year):
     ax.grid(True)
 
     return fig
+
+# prompt: colors = {"Generacion solar [TWh]":'yellow',
+#           'Generacion eolica [TWh]':'olivedrab',
+#           'Generacion geotermica-biomasa-otras [TWh]':'lime',
+#           'Generacion hidroelectrica [TWh]':'deepskyblue',
+#           "Generacion renovable con hidroelectrica [TWh]":'greenyellow',
+#           "Generacion renovable sin hidroelectrica [TWh]":'yellowgreen',
+#           "Generacion no renovable [TWh]":'darkred'} quiero que la funcion grafico_da_barras_agrupadas tenga estos colores
+
+def grafico_barras_agrupadas(countries, start_year, end_year, generation_energy_types,dfs_paises):
+    data_to_plot = {}
+    fuentes_de_energia = {'Solar':"Generacion solar [TWh]",
+                          'Eolica':"Generacion eolica [TWh]",
+                          'Geotherm-Biomass':"Generacion geotermica-biomasa-otras [TWh]",
+                          'Hidro':"Generacion hidroelectrica [TWh]",
+                          'Renovables':"Generacion renovable con hidroelectrica [TWh]",
+                          'Renovables sin Hidro':"Generacion renovable sin hidroelectrica [TWh]",
+                          'No renovable':"Generacion no renovable [TWh]"}
+
+    #generation_energy_types=[fuentes_de_energia.get(i) for i in fuentes_seleccionadas]
+    # Iterar sobre los países seleccionados
+    for country in countries:
+        df_country = dfs_paises[country].copy().rename(columns={'Generacion solar [TWh]': 'Solar',
+                                                                'Generacion eolica [TWh]': 'Eólica',
+                                                                'Generacion geotermica-biomasa-otras [TWh]': 'Geotérmica/Biomasa',
+                                                                'Generacion hidroelectrica [TWh]':'Hidro',
+                                                                'Generacion renovable con hidroelectrica [TWh]': 'Renovables',
+                                                                'Generacion renovable sin hidroelectrica [TWh]': 'Renovables sin Hidro',
+                                                                'Generacion no renovable [TWh]':'No renovable'})
+        
+        df_filtered = df_country[(df_country['Tiempo [años]'] >= start_year) & (df_country['Tiempo [años]'] <= end_year)].copy()
+
+        # Calcular porcentajes para cada tipo de energía y obtener el promedio
+        country_percentages = {}
+        for energy_type_col in generation_energy_types:
+            # Manejar la división por cero
+            percentage = (df_filtered[energy_type_col] / df_filtered['Generacion total de energia  [TWh]']) * 100
+            percentage = percentage.replace([np.inf, -np.inf], np.nan) # Reemplazar inf con NaN
+            avg_percentage = percentage.mean()
+            country_percentages[energy_type_col] = avg_percentage
+
+        if country_percentages: # Add country data only if there's any percentage calculated
+             data_to_plot[country] = country_percentages
+
+    # Convertir a DataFrame para graficar
+    df_plot = pd.DataFrame(data_to_plot)
+
+    # Crear el gráfico de barras agrupadas
+    fig, ax = plt.subplots(figsize=(15, 8))
+
+    colors = {
+        'Solar': 'yellow',
+        'Eólica': 'olivedrab',
+        'Geotérmica/Biomasa': 'lime',
+        'Hidro': 'deepskyblue',
+        'Renovables': 'greenyellow',
+        'Renovables sin Hidro': 'yellowgreen',
+        'No renovable': 'grey'
+    }
+
+    # Transponer para que los países sean las etiquetas del eje X
+    df_plot.T.plot(kind='bar', ax=ax, width=0.8,color=[colors.get(i) for i in generation_energy_types])
+
+    #ax.set_xlabel('País')
+    ax.set_ylabel('Porcentaje de la Generación Total de Electricidad (%)')
+    ax.set_title(f'Porcentaje de Generación de Electricidad por Tipo y País ({start_year}-{end_year}, Promedio)')
+    ax.tick_params(axis='x', rotation=0)
+    ax.legend(title='Tipo de Generación', bbox_to_anchor=(1.005, 1), loc='upper left')
+    ax.grid(axis='y')
+
+    plt.tight_layout()
+    plt.show()
+
+    return fig
+
 
 
 def grafico_dispersion(df, col1, col2,pais):
