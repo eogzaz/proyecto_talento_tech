@@ -30,7 +30,6 @@ st.markdown("""
         .title-text {
             font-size: 40px;
             font-weight: bold;
-            color: white;
             text-align: center;
         }
         </style>
