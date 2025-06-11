@@ -61,11 +61,11 @@ with col1:
     if eleccion_pais==None:
         st.write('(Escoge un pais para poder graficar)')
     else:
-        fig2=grafico_matriz_energetica_bar(Paises[eleccion_pais],eleccion_pais,desde_año,hasta_año)
-        st.pyplot(fig2)
+       # fig2=grafico_matriz_energetica_bar(Paises[eleccion_pais],eleccion_pais,desde_año,hasta_año)
+        #st.pyplot(fig2)
 
 
-  #fig3=grafico_tiempo(Paises['Colombia'],1985,2023,'Colombia')
+  fig3=grafico_tiempo(Paises['Colombia'],1985,2023,'Colombia')
   #st.pyplot(fig3)
   
   #fig4=grafico_tiempo(Paises['Colombia'],1985,2023,'Latinoamerica')
