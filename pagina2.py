@@ -28,8 +28,9 @@ st.markdown("""
             margin-bottom: 20px;
         }
         .title-text {
-            font-size: 2rem;
+            font-size: 40px;
             font-weight: bold;
+            color: white;
             text-align: center;
         }
         </style>
@@ -38,34 +39,56 @@ st.markdown("""
             <div class="title-text">Mix de Energía eléctrica</div>
         </div>
             """, unsafe_allow_html=True)
-#--------------------------------
+#-----------------------------------------------------------
 
-# ------------------- Barra Lateral de Controles (Sidebar) -----------------
-st.sidebar.header("Filtros")
-
-#Seleccion del pais
-eleccion_pais = st.sidebar.selectbox("Elige un pais para analizar: ", 
-                                      list(Paises.keys()),
-                                      index=None,
-                                      key='pais1',
-                                      placeholder="Elige un pais para analizar",
-                                      label_visibility="collapsed"
-                                      )
-
-#Selección de rango de años
-desde_año, hasta_año = st.sidebar.slider(
-    'Cuales años te interesan?',
-    min_value=1985,
-    max_value=2023,
-    value=[1985, 2023])
-
-# --- ----------------Análisis Detallado por Año ----------------------------
-
-col1, col2 =st.columns(2)
+col1, col2, col3 =st.columns(3)
 with col1:
+    paises_seleccionados=st.multiselect('Seleccione los paises',list(Paises.keys()),
+                                        key='pais1',
+                                        placeholder="Elige un pais para analizar",
+                                        default=['Colombia','Latinoamerica'], 
+                                        max_selections=3,
+                                        accept_new_options=True)
+    
+    fuentes_de_energia = {'Solar':"Generacion solar [TWh]",
+                          'Eólica':"Generacion eolica [TWh]",
+                          'Geotérmica/Biomasa':"Generacion geotermica-biomasa-otras [TWh]",
+                          'Hidro':"Generacion hidroelectrica [TWh]",
+                          'Renovables':"Generacion renovable con hidroelectrica [TWh]",
+                          'Renovables sin Hidro':"Generacion renovable sin hidroelectrica [TWh]",
+                          'No renovable':"Generacion no renovable [TWh]"}
+ 
+    #Selección de rango de años
+    desde_año, hasta_año = st.slider(
+        'Cuales años te interesan?',
+        min_value=1985,
+        max_value=2023,
+        value=[1985, 2023])
+    
+    variables_seleccionadas = st.pills('Seleccione las fuentes de generacion energetica',
+                                       list(fuentes_de_energia.keys()), 
+                                       selection_mode="multi",
+                                       default=list(fuentes_de_energia.keys())[0:3],
+                                       label_visibility="collapsed"
+                                       )
+    if variables_seleccionadas==[] or paises_seleccionados==[]:
+        st.write('Seleciona para graficar')
+    else:
+        fig1=grafico_barras_agrupadas(paises_seleccionados,desde_año,hasta_año,variables_seleccionadas,Paises)
+        st.pyplot(fig1)
+
+with col2:
+    #Seleccion del pais
+    eleccion_pais = st.selectbox("Elige un pais para analizar: ", 
+                                 list(Paises.keys()),
+                                 index=None,
+                                 key='pais2',
+                                 placeholder="Elige un pais para analizar",
+                                 label_visibility="collapsed"
+                                )
     año = st.selectbox(
         "Selecciona un año para ver el mix de generación de energía:",
-        options=np.arange(hasta_año,desde_año,-1))
+        options=np.arange(2023,1985,-1))
 
     if eleccion_pais==None:
         st.write('(Escoge un pais para poder graficar)')
@@ -73,10 +96,4 @@ with col1:
         fig2=grafico_pie(Paises[eleccion_pais],eleccion_pais,año)
         st.plotly_chart(fig2)
 
-with col2:
-    st.write('Acá faltan KPIs')
-    if eleccion_pais==None:
-        st.write('Escoge un pais para poder graficar')
-    else:
-        fig3=grafico_mix_electrico(Paises[eleccion_pais],eleccion_pais,desde_año,hasta_año)
-        st.pyplot(fig3)
+
