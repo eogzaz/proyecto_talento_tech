@@ -19,7 +19,7 @@ st.markdown("""
         </style>
 
         <div class="title-container">
-            <div class="title-text">Diagnostico De la transición energetica y sus efectos en las emisiones de CO2 en Colombia y Latam</div>
+            <div class="title-text">Diagnostico De la transición energetica y sus efectos en las emisiones de  CO₂ en Colombia y Latam</div>
         </div>
             """, unsafe_allow_html=True)
 #st.title("Diagnostico De la transición energetica y sus efectos en las emisiones de CO2 en Colombia y Latam")
