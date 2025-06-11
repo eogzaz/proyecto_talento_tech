@@ -95,4 +95,8 @@ with col2:
         fig2=grafico_pie(Paises[eleccion_pais],eleccion_pais,año)
         st.plotly_chart(fig2)
 
+with col3:
+  fig3=grafico_tiempo(Paises['Colombia'],'Generacion total de energia [TWh]',1985,2023,'Colombia')
+  st.pyplot(fig3)
+
 
