@@ -90,7 +90,8 @@ with col2:
         'Cuales años te interesan?',
         min_value=1985,
         max_value=2023,
-        value=[1985, 2023])
+        value=[1985, 2023],
+        key='años1')
 
     if eleccion_pais==None:
         st.write('(Escoge un pais para poder graficar)')
