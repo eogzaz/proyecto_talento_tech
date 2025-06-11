@@ -3,7 +3,7 @@ st.set_page_config(layout="wide")
 import base64
 
 # Cargar la imagen (o usar una URL)
-with open("imagen_fondo.png", "rb") as f:
+with open("imagen1.jpg", "rb") as f:
     data = f.read()
 base64_encoded = base64.b64encode(data).decode()
 
