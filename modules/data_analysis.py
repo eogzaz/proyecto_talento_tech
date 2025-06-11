@@ -289,7 +289,7 @@ def grafico_matriz_energetica_bar(pais_df,eleccion_pais, start_year, end_year):
     # Filter data by year range
     pais = pais_df[(pais_df['Tiempo [años]'] >= start_year) & (pais_df['Tiempo [años]'] <= end_year)].copy()
 
-    ax.bar(pais['Tiempo [años]'],pais['Generacion hidroelectrica [TWh]'], label='Hidro')
+    ax.bar(pais['Tiempo [años]'],pais["Generacion total de energia  [TWh]"], label='Hidro')
     ax.bar(pais['Tiempo [años]'],pais['Generacion solar [TWh]'],bottom= pais['Generacion hidroelectrica [TWh]'],label='solar')
     ax.bar(pais['Tiempo [años]'],pais['Generacion eolica [TWh]'], bottom= pais['Generacion hidroelectrica [TWh]']+pais['Generacion solar [TWh]'],label='eolica')
     ax.bar(pais['Tiempo [años]'],pais['Generacion geotermica-biomasa-otras [TWh]'], bottom= pais['Generacion hidroelectrica [TWh]']+pais['Generacion solar [TWh]']+pais['Generacion eolica [TWh]'], label='Geotherma-biomasa-others')
