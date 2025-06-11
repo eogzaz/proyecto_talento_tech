@@ -32,4 +32,4 @@ st.markdown("""
                 especialmente el ODS 7 y el ODS 13.</p>   
         </div>
             """, unsafe_allow_html=True)
-st.write(imagen1.jpeg)
+st.image(imagen1.jpeg)
