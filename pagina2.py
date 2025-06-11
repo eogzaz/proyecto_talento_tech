@@ -96,7 +96,11 @@ with col2:
         st.plotly_chart(fig2)
 
 with col3:
-  fig3=grafico_tiempo(Paises['Colombia'],'Generacion total de energia [TWh]',1985,2023,'Colombia')
+  fig3=grafico_tiempo(Paises['Colombia'],1985,2023,'Colombia')
   st.pyplot(fig3)
+  
+  fig4=grafico_tiempo(Paises['Colombia'],1985,2023,'Colombia')
+  
+  st.pyplot(fig4)
 
 
