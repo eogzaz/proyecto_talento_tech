@@ -1,26 +1,5 @@
 import streamlit as st
 st.set_page_config(layout="wide")
-import base64
-
-# Cargar la imagen (o usar una URL)
-with open("imagen1.jpg", "rb") as f:
-    data = f.read()
-base64_encoded = base64.b64encode(data).decode()
-
-# Crear el código HTML con el estilo CSS
-html_template = f'''
-<style>
-body {{
-    background: url(data:image/png;base64,{base64_encoded}) no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-}}
-</style>
-'''
-
-# Añadir el código HTML a la página
-st.markdown(html_template, unsafe_allow_html=True)
-
 st.markdown("""
         <style>
         .title-container {
@@ -53,3 +32,4 @@ st.markdown("""
                 especialmente el ODS 7 y el ODS 13.</p>   
         </div>
             """, unsafe_allow_html=True)
+st.write(imagen1.jpeg)
