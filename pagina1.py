@@ -88,4 +88,4 @@ with col2:
         fig2=grafico_generacion_y_emision_go(Paises[eleccion_pais2],eleccion_pais2,desde_año2,hasta_año2)
         st.plotly_chart(fig2, key='grafica2')
         
-
+st.write('Las gráficas ilustran claramente el desafío energético y ambiental que enfrentan tanto Colombia como Latinoamérica. El continuo aumento en el consumo de energía, mayoritariamente ligada a emisiones de CO2, subraya la necesidad urgente de transicionar hacia fuentes de energía más limpias y sostenibles. Aunque la intensidad de carbono es similar en ambas escalas, el volumen absoluto de emisiones en Latinoamérica es significativamente mayor, lo que implica que cualquier esfuerzo de descarbonización a nivel regional tendrá un impacto global más considerable. Para Colombia, si bien sus contribuciones absolutas son menores, la tendencia de crecimiento es similar, lo que demanda también una política energética proactiva hacia la sostenibilidad y la reducción de emisiones para mitigar el cambio climático.')
