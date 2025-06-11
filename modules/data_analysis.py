@@ -259,16 +259,17 @@ def grafico_dispersion(df, col1, col2,pais):
     
     return fig
 
-def grafico_tiempo(paises, col, inicio, final, pais):
+def grafico_tiempo(df_pais, inicio, final, pais):
     
     fig=plt.figure(figsize=(10, 6))
-    for indice,nombres in enumerate(paises):
-        plt.plot(nombres['Tiempo [años]'], nombres[col], label=pais[indice])
-
+    plt.plot(df_pais['Tiempo [años]'], 'Generacion total de energia [TWh]', label='Generación total')
+    plt.plot(df_pais['Tiempo [años]'], 'Generacion renovable con hidroelectrica [TWh]', label='Renovables')
+    plt.plot(df_pais['Tiempo [años]'], 'Generacion no renovable [TWh]', label='No renovables')
+    
     # Generate title and labels automatically
-    title = f'Tiempo [años] vs {col}' #en {pais}'
+    title = f'Tiempo [años] vs Generacion electrica en {pais}'
     xlabel = 'Tiempo [años]'
-    ylabel = col
+    ylabel = 'Generacion en TWh'
 
     plt.title(title)
     plt.xlabel(xlabel)
