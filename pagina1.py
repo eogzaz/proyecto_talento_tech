@@ -30,7 +30,7 @@ with col1:
     with subcol1:
         eleccion_pais1 = st.selectbox("Elige un pais para analizar: ", 
                                       list(Paises.keys()),
-                                      index=None,
+                                      index=3,
                                       key='pais1',
                                       placeholder="Elige un pais para analizar",
                                       label_visibility="collapsed"
@@ -63,7 +63,7 @@ with col2:
     with subcol1:
         eleccion_pais2 = st.selectbox("Elige un pais para analizar: ", 
                                       list(Paises.keys()),
-                                      index=None,
+                                      index=-1,
                                       key='pais2',
                                       placeholder="Elige un pais para analizar",
                                       label_visibility="collapsed"
