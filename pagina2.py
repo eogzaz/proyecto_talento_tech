@@ -48,7 +48,7 @@ paises_seleccionados=st.sidebar.multiselect('Seleccione los paises',list(Paises.
     
 fuentes_de_energia = {'Solar':"Generacion solar [TWh]",
                           'Eólica':"Generacion eolica [TWh]",
-                          'Geotérmica-Biomasa':"Generacion geotermica-biomasa-otras [TWh]",
+                          'Geotérmica y Biomasa':"Generacion geotermica-biomasa-otras [TWh]",
                           'Hidro':"Generacion hidroelectrica [TWh]",
                           'Renovables':"Generacion renovable con hidroelectrica [TWh]",
                           'Renovables sin Hidro':"Generacion renovable sin hidroelectrica [TWh]",
