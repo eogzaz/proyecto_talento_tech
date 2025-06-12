@@ -84,7 +84,7 @@ with col1:
     if  paises_seleccionados==[]:
         st.write('(Escoge un pais para poder graficar)')
     else:
-        fig1=grafico_tiempo(Paises[paises_seleccionados[0]],["Generacion total de energia  [TWh]"],desde_año,hasta_año,paises_seleccionados[0])
+        fig1=grafico_tiempo(Paises[paises_seleccionados[0]],["Generacion total de energia  [TWh]","Generacion geotermica-biomasa-otras [TWh]"],desde_año,hasta_año,paises_seleccionados[0])
         st.pyplot(fig1)
         fig2=grafico_matriz_energetica_bar(Paises[paises_seleccionados[0]],paises_seleccionados[0],desde_año,hasta_año)
         st.pyplot(fig2)
