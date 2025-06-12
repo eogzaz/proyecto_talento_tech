@@ -64,7 +64,7 @@ desde_año, hasta_año = st.sidebar.slider(
 variables_seleccionadas = st.sidebar.pills('Seleccione las fuentes de generacion energetica',
                                        list(fuentes_de_energia.keys()), 
                                        selection_mode="multi",
-                                       default=['Hidro','Renovables sin Hidro','No renovables'],
+                                       default=['Hidro','Renovables sin Hidro','No renovable'],
                                        label_visibility="collapsed"
                                        )
 
