@@ -188,7 +188,7 @@ def grafico_barras_agrupadas(countries, start_year, end_year, generation_energy_
     for country in countries:
         df_country = dfs_paises[country].copy().rename(columns={'Generacion solar [TWh]': 'Solar',
                                                                 'Generacion eolica [TWh]': 'Eólica',
-                                                                'Generacion geotermica-biomasa-otras [TWh]': 'Geotérmica-Biomasa',
+                                                                'Generacion geotermica-biomasa-otras [TWh]': 'Geotérmica y Biomasa',
                                                                 'Generacion hidroelectrica [TWh]':'Hidro',
                                                                 'Generacion renovable con hidroelectrica [TWh]': 'Renovables',
                                                                 'Generacion renovable sin hidroelectrica [TWh]': 'Renovables sin Hidro',
@@ -217,7 +217,7 @@ def grafico_barras_agrupadas(countries, start_year, end_year, generation_energy_
     colors = {
         'Solar': 'yellow',
         'Eólica': 'olivedrab',
-        'Geotérmica-Biomasa': 'red',
+        'Geotérmica y Biomasa': 'red',
         'Hidro': 'deepskyblue',
         'Renovables': 'greenyellow',
         'Renovables sin Hidro': 'yellowgreen',
@@ -263,7 +263,7 @@ def grafico_tiempo(df_pais_, cols, inicio, final, pais):
 
     df_pais = df_pais_.copy().rename(columns={'Generacion solar [TWh]': 'Solar',
                                                                 'Generacion eolica [TWh]': 'Eólica',
-                                                                'Generacion geotermica-biomasa-otras [TWh]': 'Geotérmica-Biomasa',
+                                                                'Generacion geotermica-biomasa-otras [TWh]': 'Geotérmica y Biomasa',
                                                                 'Generacion hidroelectrica [TWh]':'Hidro',
                                                                 'Generacion renovable con hidroelectrica [TWh]': 'Renovables',
                                                                 'Generacion renovable sin hidroelectrica [TWh]': 'Renovables sin Hidro',
