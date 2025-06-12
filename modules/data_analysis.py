@@ -259,17 +259,16 @@ def grafico_dispersion(df, col1, col2,pais):
     
     return fig
 
-def grafico_tiempo(df_pais, inicio, final, pais):
+def grafico_tiempo(paises, col, inicio, final, pais):
     
     fig=plt.figure(figsize=(10, 6))
-    plt.plot(df_pais['Tiempo [años]'], df_pais["Generacion total de energia  [TWh]"], label='Generación total')
-    plt.plot(df_pais['Tiempo [años]'], df_pais['Generacion renovable con hidroelectrica [TWh]'], label='Renovables')
-    plt.plot(df_pais['Tiempo [años]'], df_pais['Generacion no renovable [TWh]'], label='No renovables')
-    
+    for indice,nombres in enumerate(paises):
+        plt.plot(nombres['Tiempo [años]'], nombres[col], label=pais[indice])
+
     # Generate title and labels automatically
-    title = f'Tiempo [años] vs Generacion electrica en {pais}'
+    title = f'Tiempo [años] vs {col}' #en {pais}'
     xlabel = 'Tiempo [años]'
-    ylabel = 'Generacion en TWh'
+    ylabel = col
 
     plt.title(title)
     plt.xlabel(xlabel)
@@ -289,11 +288,10 @@ def grafico_matriz_energetica_bar(pais_df,eleccion_pais, start_year, end_year):
     # Filter data by year range
     pais = pais_df[(pais_df['Tiempo [años]'] >= start_year) & (pais_df['Tiempo [años]'] <= end_year)].copy()
 
-    ax.bar(pais['Tiempo [años]'],pais["Generacion no renovable [TWh]"], label='No renovable')
-    ax.bar(pais['Tiempo [años]'],pais["Generacion hidroelectrica [TWh]"], bottom=pais["Generacion no renovable [TWh]"] label='Hidro')
-    ax.bar(pais['Tiempo [años]'],pais['Generacion solar [TWh]'],bottom= pais["Generacion no renovable [TWh]"]+pais['Generacion hidroelectrica [TWh]'],label='solar')
-    ax.bar(pais['Tiempo [años]'],pais['Generacion eolica [TWh]'], bottom= pais["Generacion no renovable [TWh]"]+pais['Generacion hidroelectrica [TWh]']+pais['Generacion solar [TWh]'],label='eolica')
-    ax.bar(pais['Tiempo [años]'],pais['Generacion geotermica-biomasa-otras [TWh]'], bottom= pais["Generacion no renovable [TWh]"]+pais['Generacion hidroelectrica [TWh]']+pais['Generacion solar [TWh]']+pais['Generacion eolica [TWh]'], label='Geotherma-biomasa-others')
+    ax.bar(pais['Tiempo [años]'],pais['Generacion hidroelectrica [TWh]'], label='Hidro')
+    ax.bar(pais['Tiempo [años]'],pais['Generacion solar [TWh]'],bottom= pais['Generacion hidroelectrica [TWh]'],label='solar')
+    ax.bar(pais['Tiempo [años]'],pais['Generacion eolica [TWh]'], bottom= pais['Generacion hidroelectrica [TWh]']+pais['Generacion solar [TWh]'],label='eolica')
+    ax.bar(pais['Tiempo [años]'],pais['Generacion geotermica-biomasa-otras [TWh]'], bottom= pais['Generacion hidroelectrica [TWh]']+pais['Generacion solar [TWh]']+pais['Generacion eolica [TWh]'], label='Geotherma-biomasa-others')
     ax.set_xlim(start_year,end_year)
     ax.set_xlabel('Tiempo [años]')
     ax.set_ylabel('Generación de Energía [TWh]')
