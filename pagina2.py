@@ -39,6 +39,7 @@ st.markdown("""
         </div>
             """, unsafe_allow_html=True)
 #-----------------------------------------------------------
+st.sidebar.header('Filtros para la evolución del mix eléctrico')
 paises_seleccionados=st.sidebar.multiselect('Seleccione los paises',list(Paises.keys()),
                                         key='pais1',
                                         placeholder="Elige un pais para analizar",
@@ -46,6 +47,15 @@ paises_seleccionados=st.sidebar.multiselect('Seleccione los paises',list(Paises.
                                         max_selections=2,
                                         accept_new_options=True)
     
+    #Selección de rango de años
+desde_año, hasta_año = st.sidebar.slider(
+        'Cuales años te interesan?',
+        min_value=1985,
+        max_value=2023,
+        value=[1985, 2023])
+
+st.sidebar.header('Filtros para el mix eléctrico de un año en especifico')
+
 fuentes_de_energia = {'Solar':"Generacion solar [TWh]",
                           'Eólica':"Generacion eolica [TWh]",
                           'Geotérmica y Biomasa':"Generacion geotermica-biomasa-otras [TWh]",
@@ -54,21 +64,19 @@ fuentes_de_energia = {'Solar':"Generacion solar [TWh]",
                           'Renovables sin Hidro':"Generacion renovable sin hidroelectrica [TWh]",
                           'No renovable':"Generacion no renovable [TWh]"}
  
-    #Selección de rango de años
-desde_año, hasta_año = st.sidebar.slider(
-        'Cuales años te interesan?',
-        min_value=1985,
-        max_value=2023,
-        value=[1985, 2023])
-    
+
+año=st.sidebar.selectbox('Año a analizar a profundidad: ', np.arange(2023,1985,-1))
+
+
 variables_seleccionadas = st.sidebar.pills('Seleccione las fuentes de generacion energetica',
                                        list(fuentes_de_energia.keys()), 
                                        selection_mode="multi",
-                                       default=['Hidro','Renovables sin Hidro','No renovable'],
+                                       default=list(fuentes_de_energia.keys())[0:3],
                                        label_visibility="collapsed"
                                        )
 
 
+st.header('Evolución historica del mix eléctrico')
 st.write('''
          Se tiene que tanto en Colombia como América Latina presentan un claro potencial de transformación hacia una matriz energética más diversificada y sostenible. 
          Históricamente, la energía hidroeléctrica ha sido la base de la generación renovable en ambas regiones. Sin embargo, la creciente preocupación por 
@@ -84,8 +92,6 @@ with col1:
     if  paises_seleccionados==[]:
         st.write('(Escoge un pais para poder graficar)')
     else:
-        fig1=grafico_tiempo(Paises[paises_seleccionados[0]],["Generacion total de energia  [TWh]"]+variables_seleccionadas,desde_año,hasta_año,paises_seleccionados[0])
-        st.pyplot(fig1)
         fig2=grafico_matriz_energetica_bar(Paises[paises_seleccionados[0]],paises_seleccionados[0],desde_año,hasta_año)
         st.pyplot(fig2)
     
@@ -93,8 +99,6 @@ with col2:
     if  paises_seleccionados==[] or paises_seleccionados[1]==None:
         st.write('(Escoge un pais para poder graficar)')
     else:
-        fig3=grafico_tiempo(Paises[paises_seleccionados[1]],["Generacion total de energia  [TWh]"]+variables_seleccionadas,desde_año,hasta_año,paises_seleccionados[1])
-        st.pyplot(fig3)
         fig4=grafico_matriz_energetica_bar(Paises[paises_seleccionados[1]],paises_seleccionados[1],desde_año,hasta_año)
         st.pyplot(fig4)
 
@@ -106,12 +110,30 @@ st.write('''
          avanza más rápido hacia una matriz energética más diversificada y sostenible que Colombia.
          ''')
 
+col1, col2 =st.columns([1,1])
+
+with col1: 
+    if  paises_seleccionados==[]:
+        st.write('(Escoge un pais para poder graficar)')
+    else:
+        fig1=grafico_tiempo(Paises[paises_seleccionados[0]],["Generacion total de energia  [TWh]","Hidro","Renovables sin Hidro","No renovable"],desde_año,hasta_año,paises_seleccionados[0])
+        st.pyplot(fig1)
+    
+with col2:
+    if  paises_seleccionados==[] or paises_seleccionados[1]==None:
+        st.write('(Escoge un pais para poder graficar)')
+    else:
+        fig3=grafico_tiempo(Paises[paises_seleccionados[1]],["Generacion total de energia  [TWh]","Hidro","Renovables sin Hidro","No renovable"],desde_año,hasta_año,paises_seleccionados[1])
+        st.pyplot(fig3)
+
+st.header(f'Análisis profundo del Año {año}')
+mostrar_kpis_comparativos(Paises[paises_seleccionados[0]],Paises[paises_seleccionados[1]],año)
 
 
 if variables_seleccionadas==[] or paises_seleccionados==[]:
     st.write('Seleciona para graficar')
 else:
-    fig1=grafico_barras_agrupadas(paises_seleccionados,desde_año,hasta_año,variables_seleccionadas,Paises)
+    fig1=grafico_barras_agrupadas(paises_seleccionados,año,año,variables_seleccionadas,Paises)
     st.pyplot(fig1)
 
 
