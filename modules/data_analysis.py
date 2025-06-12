@@ -229,7 +229,7 @@ def grafico_barras_agrupadas(countries, start_year, end_year, generation_energy_
 
     #ax.set_xlabel('País')
     ax.set_ylabel('Porcentaje de la Generación Total de Electricidad (%)')
-    ax.set_title(f'Porcentaje de Generación de Electricidad por Tipo y País ({start_year}-{end_year}, Promedio)')
+    ax.set_title(f'Porcentaje de las diferentes fuentes de electricidad en {end_year}')
     ax.tick_params(axis='x', rotation=0)
     ax.legend(title='Tipo de Generación', bbox_to_anchor=(1.005, 1), loc='upper left')
     ax.grid(axis='y')
@@ -309,7 +309,98 @@ def grafico_matriz_energetica_bar(pais_df,eleccion_pais, start_year, end_year):
 
     return fig
 
+def mostrar_kpis_comparativos(df_colombia, df_latam, anio: float):
+    """
+    Calcula y muestra KPIs comparativos entre Colombia y Latinoamérica:
+    1. Brecha de Generación Renovable (sin hidro)
+    2. Brecha de Dependencia Hidroeléctrica
+    
+    Args:
+        df_colombia (DataFrame): Datos de generación de energía para Colombia
+        df_latam (DataFrame): Datos de generación de energía para Latinoamérica (promedio)
+        anio (float): Año para el cálculo de los KPIs
+    """
+    
+    # Filtrar datos para el año seleccionado
+    col_anio = df_colombia.query(f'`Tiempo [años]` == {str(anio)}')
+    latam_anio = df_latam.query(f'`Tiempo [años]` == {str(anio)}')
+    
+    if col_anio.empty or latam_anio.empty:
+        st.warning(f"No hay datos disponibles para el año {anio}")
+        return
+    
+    # Calcular porcentajes para Colombia
+    gen_total_col = col_anio["Generacion total de energia  [TWh]"].iloc[0]
+    gen_renovable_sin_hidro_col = col_anio["Generacion renovable sin hidroelectrica [TWh]"].iloc[0]
+    gen_hidro_col = col_anio["Generacion hidroelectrica [TWh]"].iloc[0]
+    
+    pct_renovable_sin_hidro_col = (gen_renovable_sin_hidro_col / gen_total_col) * 100
+    pct_hidro_col = (gen_hidro_col / gen_total_col) * 100
+    
+    # Calcular porcentajes para Latinoamérica (promedio)
+    gen_total_latam = latam_anio["Generacion total de energia  [TWh]"].iloc[0]
+    gen_renovable_sin_hidro_latam = latam_anio["Generacion renovable sin hidroelectrica [TWh]"].iloc[0]
+    gen_hidro_latam = latam_anio["Generacion hidroelectrica [TWh]"].iloc[0]
+    
+    pct_renovable_sin_hidro_latam = (gen_renovable_sin_hidro_latam / gen_total_latam) * 100
+    pct_hidro_latam = (gen_hidro_latam / gen_total_latam) * 100
+    
+    # Calcular brechas
+    brecha_renovable = pct_renovable_sin_hidro_latam - pct_renovable_sin_hidro_col
+    brecha_hidro = pct_hidro_col - pct_hidro_latam
+    
 
+    
+    col1, col2 = st.columns(2, gap="large")
+    
+    with col1:
+        st.metric(
+            label="🌱 Brecha de Generación Renovable (sin hidro)",
+            value=f"{brecha_renovable:.1f}%",
+            help="Diferencia en % de generación renovable no hidroeléctrica entre Latinoamérica y Colombia"
+        )
+        
+        st.markdown(f"""
+        <div style= padding:15px; border-radius:10px; margin-top:10px;">
+            <p style="font-size:14px; margin-bottom:5px;"><b>Detalle:</b></p>
+            <p style="font-size:12px; margin-bottom:2px;">Latinoamérica: {pct_renovable_sin_hidro_latam:.1f}%</p>
+            <p style="font-size:12px; margin-bottom:2px;">Colombia: {pct_renovable_sin_hidro_col:.1f}%</p>
+            <p style="font-size:12px; margin-top:10px;"><i>Valor positivo indica que Latinoamérica está más avanzada</i></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.metric(
+            label="💧 Brecha de Dependencia Hidroeléctrica",
+            value=f"{brecha_hidro:.1f}%",
+            help="Diferencia en % de generación hidroeléctrica entre Colombia y Latinoamérica"
+        )
+        
+        st.markdown(f"""
+        <div style= padding:15px; border-radius:10px; margin-top:10px;">
+            <p style="font-size:14px; margin-bottom:5px;"><b>Detalle:</b></p>
+            <p style="font-size:12px; margin-bottom:2px;">Colombia: {pct_hidro_col:.1f}%</p>
+            <p style="font-size:12px; margin-bottom:2px;">Latinoamérica: {pct_hidro_latam:.1f}%</p>
+            <p style="font-size:12px; margin-top:10px;"><i>Valor positivo indica mayor dependencia de Colombia en hidro</i></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # CSS para modificar el tamaño de la fuente en los KPI
+    st.markdown("""
+    <style>
+        /* Estilo para el valor principal de la métrica */
+        .st-emotion-cache-1wivap2 {
+            font-size: 1.8rem !important;
+        }
 
-
-
+        /* Estilo para la etiqueta de la métrica */
+        .st-emotion-cache-qoz3f2 {
+            font-size: 1rem !important;
+        }
+        
+        /* Mejorar el espaciado entre elementos */
+        .stMetric {
+            margin-bottom: 1rem;
+        }
+    </style>
+    """, unsafe_allow_html=True)
