@@ -101,6 +101,7 @@ for i in paises_latam:
 Paises['Latinoamerica']=dataframe_latam(Datos,paises_latam)
 
 # --- Streamlit App ---
+st.set_page_config(layout="wide")
 st.title("Análisis comparativo de emisiones de CO₂ por generación eléctrica")
 st.subheader("Colombia y América Latina (2010-2030)")
 
