@@ -4,6 +4,7 @@ pg = st.navigation([
     st.Page("paginaInicio.py", title="Inicio"),
     st.Page("pagina1.py", title="Energía electrica y Emisiones de C02"),
     st.Page("pagina2.py", title="Mix Eléctrico"),
-    st.Page("Codigo_prediccion.py", title="Predicciones")
+    st.Page("Codigo_prediccion.py", title="Predicciones"),
+    st.Page("import_streamlit.py", title="Proyeeciones de emisiones de CO2")
 ])
 pg.run()
