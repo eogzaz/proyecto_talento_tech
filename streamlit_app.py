@@ -8,3 +8,4 @@ pg = st.navigation([
     st.Page("import_streamlit.py", title="Proyeeciones de emisiones de CO2")
 ])
 pg.run()
+#llkjadchbsldk
