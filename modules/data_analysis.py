@@ -217,7 +217,7 @@ def grafico_barras_agrupadas(countries, start_year, end_year, generation_energy_
     colors = {
         'Solar': 'yellow',
         'Eólica': 'olivedrab',
-        'Geotérmica-Biomasa': 'lime',
+        'Geotérmica-Biomasa': 'red',
         'Hidro': 'deepskyblue',
         'Renovables': 'greenyellow',
         'Renovables sin Hidro': 'yellowgreen',
