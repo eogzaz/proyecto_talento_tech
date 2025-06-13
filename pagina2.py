@@ -96,7 +96,7 @@ with col1:
         st.pyplot(fig2)
     
 with col2:
-    if  paises_seleccionados==[] or paises_seleccionados[1]==None:
+    if  paises_seleccionados==[] or len(paises_seleccionados)==1:
         st.write('(Escoge un pais para poder graficar)')
     else:
         fig4=grafico_matriz_energetica_bar(Paises[paises_seleccionados[1]],paises_seleccionados[1],desde_año,hasta_año)
@@ -120,20 +120,24 @@ with col1:
         st.pyplot(fig1)
     
 with col2:
-    if  paises_seleccionados==[] or paises_seleccionados[1]==None:
+    if  paises_seleccionados==[] or len(paises_seleccionados)==1:
         st.write('(Escoge un pais para poder graficar)')
     else:
         fig3=grafico_tiempo(Paises[paises_seleccionados[1]],["Generacion total de energia  [TWh]","Hidro","Renovables sin Hidro","No renovable"],desde_año,hasta_año,paises_seleccionados[1])
         st.pyplot(fig3)
 
 st.header(f'Análisis profundo del Año {año}')
-mostrar_kpis_comparativos(Paises[paises_seleccionados[0]],Paises[paises_seleccionados[1]],año)
 
 
-if variables_seleccionadas==[] or paises_seleccionados==[]:
-    st.write('Seleciona para graficar')
+if paises_seleccionados==[] or len(paises_seleccionados)==1:
+        st.write('(Escoge un pais para poder graficar)')
 else:
-    fig1=grafico_barras_agrupadas(paises_seleccionados,año,año,variables_seleccionadas,Paises)
-    st.pyplot(fig1)
+    mostrar_kpis_comparativos(Paises[paises_seleccionados[0]],Paises[paises_seleccionados[1]],año)
+
+    if variables_seleccionadas==[]:
+        st.write('(Escoge fuentes de energia para graficar)')
+    else:
+        fig1=grafico_barras_agrupadas(paises_seleccionados,año,año,variables_seleccionadas,Paises)
+        st.pyplot(fig1)
 
 
