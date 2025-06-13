@@ -63,7 +63,8 @@ with col1:
             <a href="./Codigo_prediccion" target="_self">📈 Proyecciones de generación energetica electrica</a>
         </div>
     """, unsafe_allow_html=True)
-
+    st.write('(Se recomienda visualizar esa app se streamlit en un PC.)')
 with col2:
     # Imagen decorativa 
     st.image('imagen1.jpeg')
+
