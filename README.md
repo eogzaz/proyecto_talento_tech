@@ -1,4 +1,4 @@
-# 📊 Proyecto Talento Tech
+# 📊 Proyecto Talento Tech: Diagnóstico de la Transición Energética y sus Efectos en las Emisiones de CO₂ en Colombia y LATAM
 
 Este es el repositorio del **Proyecto Talento Tech**, una aplicación web desarrollada para mostrar y analizar datos de manera interactiva utilizando **Streamlit**.
 
