@@ -3,6 +3,8 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
+import statsmodels.api as sm
+from sklearn.linear_model import LinearRegression
 import streamlit as st
 
 def grafico_generacion_y_emision(pais,eleccion_pais,inicio,final):
@@ -404,3 +406,43 @@ def mostrar_kpis_comparativos(df_colombia, df_latam, anio: float):
         }
     </style>
     """, unsafe_allow_html=True)
+
+def plot_co2_projection(dfs_paises, pais):
+    df_country = dfs_paises[pais].copy()
+    df_country["Tiempo [años]"] = pd.to_numeric(df_country["Tiempo [años]"], errors='coerce')
+    df_country["Emisiones de CO2 [MTon]"] = pd.to_numeric(df_country["Emisiones de CO2 [MTon]"], errors='coerce')
+    df_country.dropna(subset=["Tiempo [años]", "Emisiones de CO2 [MTon]"], inplace=True)
+
+    # Ensure data for regression starts from 2000 onwards (as in the original code context)
+    df_regression = df_country[df_country["Tiempo [años]"] >= 2000].copy() # Assuming 2000 was the intended start for regression
+
+    X = df_regression[["Tiempo [años]"]]
+    y = df_regression["Emisiones de CO2 [MTon]"]
+
+    modelo = LinearRegression()
+    modelo.fit(X, y)
+
+        # Project to 2030
+    proyeccion_2030 = modelo.predict(np.array([[2030]]))[0]
+        # Meta oficial para el sector eléctrico  en 2030 (used as a reference)
+    meta_2030 = dfs_paises[pais]['Emisiones de CO2 [MTon]'].to_numpy().mean()
+    meta_min=meta_2030-(meta_2030*0.1)
+    meta_max=meta_2030+(meta_2030*0.1)
+        # Create the plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(df_country["Tiempo [años]"], df_country["Emisiones de CO2 [MTon]"], label="Histórico")
+    ax.scatter([2030], [proyeccion_2030], color='red', zorder=5, label=f"Proyección {pais} 2030") # Use zorder to ensure scatter point is visible
+    ax.axhline(y=meta_2030, color='green', linestyle='--', label=f"Meta {pais} 2030 ({meta_2030:.2f} Mt)")
+    # Optionally add the min and max goals from the original plot as reference
+    ax.axhline(y=meta_min, color='orange', linestyle=':', label=f"Meta mínima {pais} ({meta_min:.2f} Mt)")
+    ax.axhline(y=meta_max, color='blue', linestyle=':', label=f"Meta máxima {pais} ({meta_min:.2f} Mt)")
+
+    ax.set_xlabel("Año")
+    ax.set_ylabel("Emisiones CO₂ (Mt)")
+    ax.set_title(f"Emisiones de CO₂ {pais}: Histórico, Proyección y Meta {pais} 2030")
+
+    ax.legend()
+    ax.grid(True)
+
+    return fig
+

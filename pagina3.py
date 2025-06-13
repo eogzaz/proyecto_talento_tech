@@ -1,4 +1,3 @@
-#--------------------------------Predicciones----------------------------------------------------
 #librerias
 import streamlit as st
 import json
@@ -11,32 +10,42 @@ with open('data.json', 'r') as f:
   Paises_from_json = json.load(f)
 
 Paises = {key: pd.DataFrame(data) for key, data in Paises_from_json.items()}
-#-----------------------------------------------------------------
-#--------------------------app----------------------------------------
+#---------------------------------------------------------------------
+# --- Streamlit App ---
 st.set_page_config(layout="wide")
+st.title("Análisis comparativo de emisiones de CO₂")
+st.subheader("Colombia y América Latina")
 
-#Titulo, se usa st.markdown para mayor estetica,
-#la otra opcion es: st.title(f"Evolución de la generación de energía electrica y Emisiones de CO2")
-st.markdown("""
-        <style>
-        .title-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px; /* puedes reducirlo si quieres más arriba */
-            margin-top: -40px; /* sube el título */
-            margin-bottom: 20px;
-        }
-        .title-text {
-            font-size: 40px;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-        }
-        </style>
+st.write("""
+Acá se exploran los datos históricos y proyectar las emisiones de CO₂
+asociadas a la generación eléctrica por fuente en Colombia y Latinoamerica en general.
+""")
 
-        <div class="title-container">
-            <div class="title-text">Predicciones</div>
-        </div>
-            """, unsafe_allow_html=True)
-#-----------------------------
+available_countries = list(Paises.keys())
+
+
+col1, col2 = st.columns(2)
+
+with col1:
+    pais1 = st.selectbox("Seleccione un país",
+                        list(Paises.keys()),
+                        index=3,
+                        key='pais1')
+    fig1=plot_co2_projection(Paises,pais1)
+    st.pyplot(fig1)
+
+with col2:
+    pais2 = st.selectbox("Seleccione un país",
+                        list(Paises.keys()),
+                        index=20,
+                        key='pais2')
+    fig2=plot_co2_projection(Paises,pais2)
+    st.pyplot(fig2)
+
+
+st.write('''
+         La proyección actual indica que Colombia podría no alcanzar la meta de reducción de emisiones de CO₂
+        en el sector eléctrico para 2030 si la tendencia continúa.
+        Por lo que Colombia debe  hacer esfuerzos extras para diversificar su matriz energetica y asi lograr esta meta.
+        ''')
+

@@ -137,15 +137,3 @@ else:
     st.pyplot(fig1)
 
 
-
-st.write('''
-         La correlación entre la "Ren power (excl hydro) - TWh" y la generación solar y eólica es muy fuerte, especialmente en América Latina 
-         (0.88 para solar y 0.98 para eólica), lo que destaca su contribución a la energía renovable más allá de la hidroeléctrica. En Colombia, aunque los 
-         valores absolutos son menores, también se observan correlaciones positivas significativas.
-         La mayor adopción de la energía solar y eólica tendrá un impacto multifacético, incluyendo una mayor seguridad energética al diversificar la matriz y 
-         reducir la vulnerabilidad a eventos climáticos extremos. Además, contribuirá a la sostenibilidad ambiental al no producir emisiones de gases de efecto 
-         invernadero durante su operación. También impulsará el desarrollo económico y la creación de empleo en nuevas industrias, mejorará el acceso a la energía 
-         en comunidades remotas y reducirá los riesgos económicos asociados a la dependencia de una única fuente ante la variabilidad climática. En resumen, 
-         la integración de la energía solar y eólica es crucial para fortalecer la seguridad energética, la sostenibilidad ambiental y el desarrollo socioeconómico 
-         en la región.
-         ''')

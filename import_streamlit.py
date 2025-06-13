@@ -224,30 +224,3 @@ else:
     st.error("Los datos para Colombia no están disponibles.")
 
 
-# --- Section 3: Data Table (Optional) ---
-st.header("Tabla de Datos (Ejemplo)")
-st.write("Visualización de una muestra de los datos.")
-
-# You can choose to display a specific dataframe or a combined one
-# For simplicity, let's show the data for the selected country in the exploratory section
-if selected_country in Paises:
-    st.dataframe(Paises[selected_country].head())
-else:
-    st.info("Seleccione un país para ver una muestra de los datos.")
-
-# --- Section 4: Methodology and Source ---
-st.header("Metodología y Fuente de Datos")
-st.write("""
-El análisis se basa en datos históricos de emisiones de CO₂ y generación eléctrica por fuente
-del Energy Institute Statistical Review of World Energy (https://www.energyinst.org/statistical-review).
-
-Se utiliza un modelo de regresión lineal para proyectar las emisiones de CO₂ para Colombia hasta 2030
-basado en la tendencia histórica (datos a partir del año 2000).
-""")
-
-# --- About Section (Optional) ---
-st.sidebar.header("Acerca de")
-st.sidebar.info(
-    "Esta aplicación fue creada para visualizar y analizar las tendencias de emisiones de CO₂ "
-    "en el sector eléctrico de Colombia y América Latina."
-)
