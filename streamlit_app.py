@@ -8,5 +8,4 @@ pg = st.navigation([
     st.Page("Codigo_prediccion.py", title="Proyecciones de generación energetica"),
 ])
 pg.run()
-#llkjadchbsldk
-#otra linea
+

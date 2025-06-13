@@ -33,7 +33,6 @@ def grafico_generacion_y_emision(pais,eleccion_pais,inicio,final):
 
     return fig
 
-import plotly.graph_objects as go
 
 def grafico_generacion_y_emision_go(pais, eleccion_pais, inicio, final):
     # Filtrar los datos en el rango de tiempo especificado

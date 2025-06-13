@@ -14,11 +14,11 @@ Paises = {key: pd.DataFrame(data) for key, data in Paises_from_json.items()}
 # --- Streamlit App ---
 st.set_page_config(layout="wide")
 st.title("Análisis comparativo de emisiones de CO₂")
-st.subheader("Colombia y América Latina")
 
 st.write("""
-Acá se exploran los datos históricos y proyectar las emisiones de CO₂
+Acá se exploran los datos históricos y proyecciones de las emisiones de CO₂
 asociadas a la generación eléctrica por fuente en Colombia y Latinoamerica en general.
+Aunque tambien se pueden comparar otros paises y regiones.
 """)
 
 available_countries = list(Paises.keys())
@@ -42,8 +42,8 @@ with col2:
     fig2=plot_co2_projection(Paises,pais2)
     st.pyplot(fig2)
 
-
-st.write('''
+if pais1=='Colombia' or pais2=='Colombia':
+    st.write('''
          La proyección actual indica que Colombia podría no alcanzar la meta de reducción de emisiones de CO₂
         en el sector eléctrico para 2030 si la tendencia continúa.
         Por lo que Colombia debe  hacer esfuerzos extras para diversificar su matriz energetica y asi lograr esta meta.
