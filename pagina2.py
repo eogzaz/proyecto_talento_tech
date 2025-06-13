@@ -71,7 +71,7 @@ año=st.sidebar.selectbox('Año a analizar a profundidad: ', np.arange(2023,1985
 variables_seleccionadas = st.sidebar.pills('Seleccione las fuentes de generacion energetica',
                                        list(fuentes_de_energia.keys()), 
                                        selection_mode="multi",
-                                       default=list(fuentes_de_energia.keys())[0:3],
+                                       default=['Solar','Eólica','Geotérmica y Biomasa','Hidro','No renovable'],
                                        label_visibility="collapsed"
                                        )
 
